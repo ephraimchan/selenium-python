@@ -1,6 +1,10 @@
 pipeline {
     agent any
     
+    environment {
+        SELENIUM_HUB_URL = 'http://selenium-hub:4444'
+    }
+    
     stages {
         stage('Setup') {
             steps {
@@ -9,13 +13,8 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                bat 'pytest Basic_test-1.py -v'
+                bat 'python Basic_test-1.py'
             }
-        }
-    }
-    post {
-        always {
-            junit 'results.xml'
         }
     }
 }
