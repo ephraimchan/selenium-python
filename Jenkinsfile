@@ -8,13 +8,22 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                bat 'pip install selenium pytest'
+                sh 'pip install selenium pytest'
             }
         }
         stage('Run Tests') {
             steps {
-                bat 'python Basic_test-1.py'
+                sh 'python Basic_test-1.py'
             }
+        }
+    }
+    
+    post {
+        always {
+            echo 'Test execution completed'
+        }
+        failure {
+            echo 'Tests failed - check Selenium Grid connection'
         }
     }
 }
