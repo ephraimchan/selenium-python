@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+    docker { image 'python:3.12-slim' }
+  }
     
     environment {
         SELENIUM_HUB_URL = 'http://selenium-hub:4444'
@@ -8,7 +10,10 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh 'pip install selenium pytest'
+                sh '''
+                  python -m pip install --upgrade pip setuptools wheel || true
+                  python -m pip install selenium pytest
+                '''
             }
         }
         stage('Run Tests') {
