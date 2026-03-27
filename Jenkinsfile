@@ -1,9 +1,8 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Python3'
-    }
+    // Removed the 'tools' block unless you have a specific 
+    // Python installation defined in Global Tool Configuration.
 
     stages {
         stage('Checkout') {
@@ -13,26 +12,19 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'python Basic_test-1.py'
+                // Ensure python3 is used if that's your environment
+                sh 'python3 Basic_test-1.py' 
             }
         }
     }
 
     post {
-            always {
-               
-            }
-
-            success {
-                // This only runs if all tests pass
-                echo 'PASSED: Selenium tests completed successfully on the Grid.'
-            }
-
-            failure {
-                // This only runs if at least one test fails
-                echo 'FAILED: Selenium tests failed. Check TestNG Results for details.'
-                // You can also add archiveArtifacts here to save logs
-            }
-
+        success {
+            echo 'PASSED: Selenium tests completed successfully.'
+        }
+        failure {
+            // Updated message to be language-accurate
+            echo 'FAILED: Python Selenium tests failed.'
+        }
     }
 }
