@@ -1,22 +1,19 @@
 pipeline {
     agent any
-
-    // Removed the 'tools' block unless you have a specific 
-    // Python installation defined in Global Tool Configuration.
-
     stages {
-        stage('Checkout') {
+        stage('Install Environment') {
             steps {
-                checkout scm
+                // This installs python if it's missing from the container
+                sh 'apt-get update && apt-get install -y python3'
             }
         }
         stage('Test') {
             steps {
-                // Ensure python3 is used if that's your environment
-                sh 'python3 Basic_test-1.py' 
+                sh 'python3 Basic_test-1.py'
             }
         }
     }
+}
 
     post {
         success {
@@ -27,4 +24,3 @@ pipeline {
             echo 'FAILED: Python Selenium tests failed.'
         }
     }
-}
