@@ -1,6 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'python:3.9-slim' }
+    agent any
     }
 
     environment {
