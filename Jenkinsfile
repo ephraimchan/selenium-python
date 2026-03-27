@@ -1,34 +1,39 @@
 pipeline {
-    agent {
-    docker { image 'python:3.12-slim' }
-  }
-    
-    environment {
-        SELENIUM_HUB_URL = 'http://selenium-hub:4444'
+    agent any
+
+    tools {
+        maven 'Maven3'
     }
-    
+
     stages {
-        stage('Setup') {
+        stage('Checkout') {
             steps {
-                sh '''
-                  python -m pip install --upgrade pip setuptools wheel || true
-                  python -m pip install selenium pytest
-                '''
+                checkout scm
             }
         }
-        stage('Run Tests') {
+        stage('Test') {
             steps {
-                sh 'python Basic_test-1.py'
+                sh 'mvn clean test'
             }
         }
     }
-    
+
     post {
-        always {
-            echo 'Test execution completed'
-        }
-        failure {
-            echo 'Tests failed - check Selenium Grid connection'
-        }
+            always {
+                // This runs every time to update your charts
+                step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+            }
+
+            success {
+                // This only runs if all tests pass
+                echo 'PASSED: Selenium tests completed successfully on the Grid.'
+            }
+
+            failure {
+                // This only runs if at least one test fails
+                echo 'FAILED: Selenium tests failed. Check TestNG Results for details.'
+                // You can also add archiveArtifacts here to save logs
+            }
+
     }
 }
