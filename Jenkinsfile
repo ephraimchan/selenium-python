@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        maven 'Maven3'
+        maven 'Python3'
     }
 
     stages {
@@ -13,15 +13,14 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'mvn clean test'
+                sh 'python Basic_test-1.py'
             }
         }
     }
 
     post {
             always {
-                // This runs every time to update your charts
-                step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+               
             }
 
             success {
