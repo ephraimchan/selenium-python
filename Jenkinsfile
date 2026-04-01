@@ -27,7 +27,11 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'python3 Basic_test-1.py'
+                // 1. We use 'pytest' instead of 'python3' to run the specific file
+                // 2. We add the --junitxml flag to generate the report file
+                // 3. We add '|| true' so the pipeline doesn't stop immediately if a test fails,
+                //    allowing the 'post' block to still grab the report.
+                sh 'pytest Basic_test-1.py --junitxml=results.xml || true'
             }
         }
     }
@@ -43,7 +47,7 @@ pipeline {
         }
         always {
         // This looks for the XML report created by pytest
-        junit '**/nosetests.xml' 
+        junit 'results.xml' 
     }
 
    
