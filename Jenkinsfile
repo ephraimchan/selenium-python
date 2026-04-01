@@ -32,6 +32,7 @@ pipeline {
         }
     }
 
+
     // The post block must be INSIDE the pipeline braces
     post {
         success {
@@ -41,4 +42,11 @@ pipeline {
             echo 'FAILED: Python Selenium tests failed.'
         }
     }
+
+    post {
+    always {
+        // This looks for the XML report created by pytest
+        junit '**/nosetests.xml' 
+    }
+}
 } // End of pipeline
