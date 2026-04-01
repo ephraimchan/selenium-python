@@ -1,6 +1,11 @@
 pipeline {
     agent {
-        docker { image 'python:3.9' }
+        docker { 
+            
+            image 'my-selenium-python:latest'
+            // This allows the container to talk back to your Docker host if needed
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            }
     }
     
 
@@ -18,12 +23,7 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'python -m ensurepip --upgrade'
-                sh 'pip3 install selenium'
-            }
-        }
+        
 
         stage('Test') {
             steps {
