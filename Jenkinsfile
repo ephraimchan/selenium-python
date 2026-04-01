@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'python:3.9' }
+    }
     
 
     environment {
@@ -16,9 +18,10 @@ pipeline {
             }
         }
 
-        stage('Install') {
+        stage('Install Dependencies') {
             steps {
-                sh 'pip install selenium'
+                sh 'python -m ensurepip --upgrade'
+                sh 'pip3 install selenium'
             }
         }
 
