@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    }
+    
 
     environment {
         // host.docker.internal works if Jenkins is on Docker Desktop (Windows/Mac)
