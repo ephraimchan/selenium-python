@@ -41,12 +41,11 @@ pipeline {
         failure {
             echo 'FAILED: Python Selenium tests failed.'
         }
-    }
-
-    post {
-    always {
+        always {
         // This looks for the XML report created by pytest
         junit '**/nosetests.xml' 
     }
+
+   
 }
 } // End of pipeline
