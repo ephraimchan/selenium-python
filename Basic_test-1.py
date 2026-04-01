@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import os
 
-def Basic_test():
+def test_Basic_test():
     # Use the service name defined in your docker-compose or the Grid IP
     grid_url = os.getenv('SELENIUM_HUB_URL', 'http://host.docker.internal:4444')
     
@@ -42,4 +42,4 @@ def Basic_test():
             driver.quit()
 
 if __name__ == "__main__":
-    Basic_test()
+    test_Basic_test()

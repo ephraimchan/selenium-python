@@ -31,7 +31,7 @@ pipeline {
                 // 2. We add the --junitxml flag to generate the report file
                 // 3. We add '|| true' so the pipeline doesn't stop immediately if a test fails,
                 //    allowing the 'post' block to still grab the report.
-                sh 'pytest Basic_test-1.py --junitxml=results.xml || true'
+                sh 'python3 -m pytest -v Basic_test-1.py --junitxml=results.xml || true'
             }
         }
     }
@@ -46,8 +46,8 @@ pipeline {
             echo 'FAILED: Python Selenium tests failed.'
         }
         always {
-        // This looks for the XML report created by pytest
-        junit 'results.xml' 
+        // allowEmptyResults: true prevents the "Configuration error" if no tests ran yet
+        junit testResults: 'results.xml', allowEmptyResults: true
     }
 
    
