@@ -3,7 +3,8 @@ pipeline {
         docker { 
             image 'my-selenium-python:latest'
             // Keep this if you want the container to have Docker-in-Docker capability
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            
+            args '--mount type=npipe,source=//./pipe/docker_engine,target=//./pipe/docker_engine'
         }
     }
 
