@@ -49,7 +49,7 @@ def run_login_test(scenario, grid_url, options):
             driver.quit()
 
 def main():
-    grid_url = os.getenv('SELENIUM_HUB_URL', 'http://host.docker.internal:4444')
+    grid_url = os.getenv('SELENIUM_HUB_URL', 'http://localhost:4444')
     
     options = Options()
     options.add_argument('--headless')
