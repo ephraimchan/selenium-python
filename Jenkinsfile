@@ -1,20 +1,17 @@
 pipeline {
     agent {
-        docker { 
+        docker {
             image 'my-selenium-python:latest'
-            // Keep this if you want the container to have Docker-in-Docker capability
-            
-            args '--mount type=npipe,source=//./pipe/docker_engine,target=//./pipe/docker_engine'
         }
     }
 
     environment {
-        // Essential for Docker Desktop on Windows
-        SELENIUM_HUB_URL = 'http://host.docker.internal:4444' 
-        DOCKER_HOST = 'tcp://localhost:2375'
+        // Selenium is in another container on same Docker network
+        SELENIUM_HUB_URL = 'http://selenium-hub:4444'
     }
 
     stages {
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -23,7 +20,6 @@ pipeline {
 
         stage('Test') {
             steps {
-                // Ensure the filename matches your actual .py file
                 sh 'python3 -m pytest -v Basic_test-1.py --junitxml=results.xml || true'
             }
         }
@@ -40,4 +36,4 @@ pipeline {
             junit testResults: 'results.xml', allowEmptyResults: true
         }
     }
-} // End of pipeline
+}
