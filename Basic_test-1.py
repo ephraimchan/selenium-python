@@ -4,7 +4,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import os
-import Login_Parameter  # Importing your scenarios
+import Login_Parameter
+import time  # Importing your scenarios
 
 def run_login_test(scenario, grid_url, options):
     print(f"Running Scenario: {scenario['desc']}...")
@@ -40,6 +41,9 @@ def run_login_test(scenario, grid_url, options):
             assert "is invalid" in actual_text or "Your username is invalid!" in actual_text
 
         print(f"  ✓ {scenario['desc']} passed.")
+        
+        # MUST BE INSIDE THE TRY BLOCK
+        time.sleep(10)
 
     except Exception as e:
         print(f"  ✗ {scenario['desc']} failed: {str(e)}")
@@ -49,10 +53,10 @@ def run_login_test(scenario, grid_url, options):
             driver.quit()
 
 def main():
-    grid_url = os.getenv('SELENIUM_HUB_URL', 'http://localhost:4444')
+    grid_url = os.getenv('SELENIUM_HUB_URL', 'http://selenium-hub:4444')
     
     options = Options()
-    options.add_argument('--headless')
+    # options.add_argument('--headless')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
 
