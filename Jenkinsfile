@@ -20,10 +20,15 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'python3 -m pytest -v Basic_test-1.py --junitxml=results.xml || true'
+                // Changed filename here to match your renamed file (e.g., test_basic.py)
+                // and added --collect-only to debug
+                sh 'python3 -m pytest --collect-only'
+                
+                // Once you see tests listed in the log, change it back to:
+                // sh 'python3 -m pytest -v test_basic_1.py --junitxml=results.xml || true'
             }
         }
-    }
+
 
     post {
         success {
