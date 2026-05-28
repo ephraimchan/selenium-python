@@ -22,7 +22,7 @@ pipeline {
         stage('Test') {
             steps {
                 //sh 'python3 -m pytest --collect-only'
-                sh 'python3 -m pytest -v test_basic_1.py --junitxml=results.xml || true'
+                sh 'python3 -m pytest -v test_grid_1_chrome_non_parallel.py --junitxml=results.xml || true'
             }
         }
     }

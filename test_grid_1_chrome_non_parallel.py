@@ -1,3 +1,4 @@
+
 import pytest
 import os
 from selenium import webdriver
@@ -27,19 +28,20 @@ def test_login_scenarios(scenario, driver_options):
         command_executor=f'{grid_url}/wd/hub',
         options=driver_options
     )
-    
+# 3. Load the webpage and perform interactions based on the scenario    
     try:
         print(f"Running: {scenario['desc']}")
         driver.get("https://the-internet.herokuapp.com/login")
         
         wait = WebDriverWait(driver, 10)
         
-        # Interactions
+# 4. Locate the username and password fields, enter the credentials, and click the login button based on the scenario
         wait.until(EC.presence_of_element_located((By.ID, "username"))).send_keys(scenario['username'])
         driver.find_element(By.ID, "password").send_keys(scenario['password'])
         driver.find_element(By.CSS_SELECTOR, "button.radius").click()
 
         # Validation
+        # The word flash is an ID for the internet-herokuapp website (Success banner id)
         message_element = wait.until(EC.presence_of_element_located((By.ID, "flash")))
         actual_text = message_element.text
 
