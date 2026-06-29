@@ -12,3 +12,4 @@ LOGIN_SCENARIOS = [
     {"username": "!@#$%^", "password": "SuperSecretPassword!", "expected": "fail", "desc": "Special Characters"},
     {"username": "tomsmith", "password": " SuperSecretPassword!", "expected": "fail", "desc": "Leading Space Pass"}
 ]
+ 
