@@ -236,6 +236,3 @@ Browser options set in the test fixture:
 
 
 
-## License
-
-Add your preferred license here (e.g. MIT).
